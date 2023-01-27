@@ -1,5 +1,7 @@
-# Customer-classification
-Preprocessing and modeling of a bank marketing dataset 
+# :moneybag: Customer classification
+Introduction 
+
+
 
 ```
 	age	job	marital	education	default	balance	housing	loan	contact	day	month	duration	campaign	pdays	previous	poutcome	y

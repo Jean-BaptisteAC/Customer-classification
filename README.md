@@ -180,7 +180,7 @@ sns.heatmap(train_dataset.corr())
 
 ![image](https://user-images.githubusercontent.com/66775006/215199771-ff15e373-76c9-45cd-8e3c-7244c56843d9.png)
 
-What is see is that there exist no strong correlation between our features except for the couple **duration/y** and **previous/pdays**.
+What is seen is that there exist no strong correlation between our features except for the couple **duration/y** and **previous/pdays**.
 We will now begin the scaling of our dataset in order to standardize our data and reduce bias from differences in ranges between features.
 
 ### Scaling of relevant columns
@@ -199,7 +199,7 @@ X_test
 
 ![image](https://user-images.githubusercontent.com/66775006/215201974-504c1ff1-9a90-4764-b392-53e5182c5588.png)
 
-Now that we have now our scaled data, we can do the final step of our preprocessing, which is the **One-Hot-Encoding** of the remaining variables. 
+Now that we have our scaled data, we can do the final step of our preprocessing, which is the **One-Hot-Encoding** of the remaining variables. 
 
 ### One Hot Encoding for marital, contact and poutcome Columns
 
@@ -260,7 +260,7 @@ Confusion Matrix:
 ```
 
 The model yields very good results in terms of accuracy *(~90% accuracy)* .However, we understand that the results are not very good.
-Indeed as the dataset is unbalanced (the vast majority of customers didn't want to subscribe to the deposit), the number of **false positives** and **false negatives** is far greater that the number of **true negatives**. Lets try with another model: **random forest**.
+Indeed as the dataset is unbalanced (the vast majority of customers didn't want to subscribe to the deposit), the number of **false positives** and **false negatives** is far greater than the number of **true negatives**. Lets try with another model: **random forest**.
 
 ### Random Forest
 

@@ -1,8 +1,8 @@
 # :moneybag: Customer classification
 
 In this project, we will focus on predicting the behavior of clients in a Bank dataset. 
-Indeed, the classification goal is to predict if the client will subscribe a term deposit.
-The data set can be found in the website:  https://archive.ics.uci.edu/ml/datasets/Bank+Marketing which is a very good site for open-source dataset. The focus will be put on preprocessing as this dataset has a lot of non numerical values and need many preprocessing techniques to be used properly. 
+Indeed, the classification goal is to predict if the client will subscribe to a term deposit.
+The data set can be found in the website:  https://archive.ics.uci.edu/ml/datasets/Bank+Marketing which is a very good site for open-source datasets. The focus will be put on preprocessing as this dataset has a lot of non numerical values and needs many preprocessing techniques to be used properly. 
 
 ## Using the Code
 
@@ -10,7 +10,7 @@ The dataset can be found in the file ```bank.csv```, and the python notebook use
 
 ## Preprocessing
 
-For this project, we will use the most famous data science libraries which are **scikit-learn** and **pandas**. For visualisation, we will use **matplotlib** and **seaborn**
+For this project, we will use the most famous data science libraries which are **scikit-learn** and **pandas**. For visualization, we will use **matplotlib** and **seaborn**
 
 ```
 import pandas as pd
@@ -89,12 +89,12 @@ dtype: int64
 
 ### Ordinal Encoding for Education and Month columns
 
-We will start the encoding with the easiest features. As there exists a hierarchical structure in the Education and Month columns, we need to encode those values while respecting the order of the values. For instance as a secondary education should be considered longer than a primairy education, the preprocessed data should reflects this link.
+We will start the encoding with the easiest features. As there exists a hierarchical structure in the Education and Month columns, we need to encode those values while respecting the order of the values. For instance as a secondary education should be considered longer than a primary education, the preprocessed data should reflect this link.
 
 ```
 df["education"].unique()
 ```
-The Ordinal Encoder from **scikit-learn** helps us assign an integer proportinal to the level of education of each client.
+The Ordinal Encoder from **scikit-learn** helps us assign an integer proportional to the level of education of each client.
 
 ```
 from sklearn.preprocessing import OrdinalEncoder
@@ -103,7 +103,7 @@ encoder = OrdinalEncoder(categories = [cat])
 df["education"] = encoder.fit_transform(df[["education"]])
 ```
 
-For encoding the month feature, we can simply assign the number of the month *(Septr = 1, Oct = 2, ...)* to each corresponding value. 
+For encoding the month feature, we can simply assign the number of the month *(Jan = 1, Feb= 2, ...)* to each corresponding value. 
 
 ```
 df["month"].unique()
@@ -120,7 +120,7 @@ This gives us the following dataset:
 
 ### Label Encoding for binary Columns
 
-For binairy features (columns that only take 2 different values), we can use the very simple **LabelEncoder** from the scikit-learn librairy. Those features are :
+For binary features (columns that only take 2 different values), we can use the very simple **LabelEncoder** from the scikit-learn library. Those features are :
 - "default" (the customer has credit in default)
 - "housing" (the customer has a house)
 - "load" (the customer contracted a loan)
@@ -139,7 +139,7 @@ df
 
 ### Splitting dataset
 
-We're not done with the ecoding step of the preprocessing. However, as we are going to implement what is called frequency encoding, we must split the dataset before doing this encoding, as we would cheat and transmit information that shouldn't not exist in the test set. 
+We're not done with the encoding step of the preprocessing. However, as we are going to implement what is called frequency encoding, we must split the dataset before doing this encoding, as we would cheat and transmit information that shouldn't not exist in the test set. 
 
 ```
 from sklearn.model_selection import train_test_split
@@ -151,7 +151,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 ### Frequency Encoding for job Column
 
-The purpose of frequency encoding is to assign to each value a number proportional to its frequency in the dataset. We can do this technique when the values of the feature have no order and when the amount of different values is too big for one-hot-encoding to be practical. Moreover, it is important to underline here that we retrieve the frenquency information from the train set and apply it to both the train and the test set. This is done so that the distribution of the test set remains unknown. 
+The purpose of frequency encoding is to assign to each value a number proportional to its frequency in the dataset. We can do this technique when the values of the feature have no order and when the amount of different values is too big for one-hot-encoding to be practical. Moreover, it is important to underline here that we retrieve the frequency information from the train set and apply it to both the train and the test set. This is done so that the distribution of the test set remains unknown. 
 
 ```
 enc_job = (X_train.groupby('job').size())/len(X_train)
@@ -181,7 +181,7 @@ sns.heatmap(train_dataset.corr())
 ![image](https://user-images.githubusercontent.com/66775006/215199771-ff15e373-76c9-45cd-8e3c-7244c56843d9.png)
 
 What is see is that there exist no strong correlation between our features except for the couple **duration/y** and **previous/pdays**.
-We will now beggin the scaling of our dataset in order to standardize our data and reduce biais from differences in ranges between features.
+We will now begin the scaling of our dataset in order to standardize our data and reduce bias from differences in ranges between features.
 
 ### Scaling of relevant columns
 
@@ -218,7 +218,7 @@ X_test
 
 ![image](https://user-images.githubusercontent.com/66775006/215202958-abd273c6-2e74-4da8-a04e-6ca868b32f1c.png)
 
-Now our data is correctly encoded, scaled and splited in a Train and Test dataset. It is important that we did the right operations in the right order to prevent the introduction of biases in the dataset.
+Now our data is correctly encoded, scaled and splitted in a Train and Test dataset. It is important that we did the right operations in the right order to prevent the introduction of biases in the dataset.
 
 We will now start the modeling step which will be very short in comparison with all the preprocessing work that we have done so far.
 
@@ -259,7 +259,7 @@ Confusion Matrix:
  [ 24  39]]
 ```
 
-The model yields very good results in terms of accuracy *(~90% accuracy)*, however, we understand that the results are not very good.
+The model yields very good results in terms of accuracy *(~90% accuracy)* .However, we understand that the results are not very good.
 Indeed as the dataset is unbalanced (the vast majority of customers didn't want to subscribe to the deposit), the number of **false positives** and **false negatives** is far greater that the number of **true negatives**. Lets try with another model: **random forest**.
 
 ### Random Forest
@@ -294,17 +294,19 @@ Confusion Matrix:
  [ 17  32]]
  ```
  
-As random forest is a much stronger algorithm, its capacity alows for an amazing 100% accuracy on the train set. However, results are not really improved on the test set when compared with the logistic regression model, and it is likely that our model overfitted the data. 
+As random forest is a much stronger algorithm, its capacity allows for an amazing 100% accuracy on the train set. However, results are not really improved on the test set when compared with the logistic regression model, and it is likely that our model overfitted the data. 
  
 This is not really important as the goal of this project was not to achieve a perfect result, but rather to demonstrate the whole working process of a Data Scientist, from the preprocessing to the modeling of the AI. 
 
 ## Conclusion
 
 This project is interesting from the preprocessing point of vue. 
-Indeed, we applied various preprocessing technique in order to extract useful informations from the feature's labels. 
+Indeed, we applied various preprocessing techniques in order to extract useful information from the feature's labels. 
 
 So far, we used:
 - **Label Encoding**
 - **One Hot Encoding**
 - **Frequency Encoding**
 - **Ordinal Encoding**
+
+
